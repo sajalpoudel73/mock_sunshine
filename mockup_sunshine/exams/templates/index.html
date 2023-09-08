@@ -2,5 +2,13 @@
 {% block title %} | Homepage {% endblock %}
 
 {% block content %}
-Jai Nepal hello
+
+<div class="jumbotron container text-center">
+    <div class="message h3">SMT - Sunshine MockUp Test</div>
+    <div class="h5">Assessment and Testing Solutions with Superior Infrastructure & High End Technology.</div>
+</div>
+<div class=" text-center row container-fluid">
+<div class="p-4 bg-primary text-light col-md-6"><strong>Tests Taken: {{ tests_taken }}</strong></div>
+<div class="p-4 bg-success text-light col-md-6"><strong>Passed Students: {{ passed }} </strong></div>
+</div>
 {% endblock %}
