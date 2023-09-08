@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'exams.apps.ExamsConfig',
     'bootstrap5',
     'widget_tweaks',
-    'django_bootstrap_icons'
+    'django_bootstrap_icons',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            
             ],
         },
     },
@@ -84,7 +86,7 @@ DATABASES = {
     }
 }
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -130,3 +132,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_REDIRECT_URL='index'
+LOGIN_URL='login'
+LOGOUT_REIDRECT_URL="index"

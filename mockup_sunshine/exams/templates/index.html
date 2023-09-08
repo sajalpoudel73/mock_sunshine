@@ -7,14 +7,30 @@
     <h1 class="display-4">Welcome to Sunshine Mockup Test System</h1>
     <p class="lead">Assessment and Testing Solutions with Superior Infrastructure & High End Technology.</p>
     <hr class="my-4">
+    {% if user.is_authenticated %}
     <p>Want to find out how well you are prepared for the test?</p>
     <a class="btn btn-primary btn-lg" href="#" role="button">Start Here</a>
+    {% else %}
+    <p>What makes us best at what we do</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'about' %}" role="button">Find Out</a>
+    {% endif %}
 </div>
+
+{% if user.is_authenticated and message %}
+<div class="p-3 bg-danger text-light text-center mt-5 mb-5">
+    <p class="h4">Warning!! You have not filled in your details.</p>
+    <a href="{% url 'fill_details' %}" class="btn btn-primary">Click Me to Fill Your Details</a>
+</div>
+{% endif %}
+
 
 <div class=" text-center row container-fluid mt-5">
 <div class="p-4 bg-primary text-light col-md-6">{% bs_icon 'file-text' size='1.5em' %} Tests Taken: {{ tests_taken }}</strong></div>
 <div class="p-4 bg-success text-light col-md-6">{% bs_icon 'file-earmark-check' size='1.5em' %}<strong>Passed Students: {{ passed }} </strong></div>
 </div>
+
+
+
 
 <style>
     /* Define a fixed height for the carousel card container */
