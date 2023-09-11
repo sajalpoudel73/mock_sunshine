@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'mockup_sunshine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mockup_sunshine',
+        'NAME': 'sunshine_mockup',
         'USER':'root',
         'PASSWORD':'Sajal.2017',
         'PORT':3306,
