@@ -102,7 +102,8 @@ def dashboard(request):
 @login_required
 @user_passes_test(is_staff)
 def admin_dash(request):
-    return render(request,'admin_dash.html')
+    users = User.objects.exclude(is_staff=True, is_superuser=True).count()
+    return render(request,'admin_dash.html',{'users':users})
 
 def view_users(request):
     staffs = User.objects.filter(is_staff=True).values('id', 'username', 'email')

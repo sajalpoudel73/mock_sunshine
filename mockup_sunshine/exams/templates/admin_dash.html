@@ -9,15 +9,9 @@
         <!-- Sidebar -->
         <div id="sidebar" class="col-sm-2 bg-dark">
             <div class="p-3 text-center ">
-                <h3>Admin Dashboard</h3>
+               <a href=" {% url 'dashboard' %}" class="btn btn-dark"> <h3>Admin Dashboard</h3></a>
             </div>
-<style>
-    .btn-container a:hover{
-        text-decoration: underline;
-        transform: scale(1.1);
-        transition:transform 0.2s ease;
-    }
-</style>
+
             <div class="container-fluid text-center">
                 <div class="btn-container">
                     <a href="{% url 'view-users' %}" class="btn text-primary btn-block my-1" data-route="view-users"><strong>View Users</strong></a>
@@ -38,7 +32,12 @@
         
        
         <div id="main-content" class="col-md-9">
+
            {% block page %}
+           <div class="row container-fluid">
+           <div class="p-3 bg-primary text-center col-md-3 my-1 mx-1">No of users: {{ users }}</div>
+           <div class="p-3 bg-primary text-center col-md-3 my-1 mx-1">No of tests: 6546</div>
+        </div>
            {% endblock %}
         </div>
     </div>
