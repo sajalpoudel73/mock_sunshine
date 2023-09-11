@@ -7,7 +7,7 @@ class ParticipantForm(forms.ModelForm):
     class Meta:
         model = Participant
        
-        fields = ['name', 'email', 'address', 'phone']
+        fields = ['name', 'email', 'address', 'phone','education','university','dob']
         
 
 

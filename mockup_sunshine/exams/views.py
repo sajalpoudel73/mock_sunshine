@@ -81,6 +81,5 @@ def fill_details(request):
         else:
             messages.error(request, 'Form is not valid. Please check the data you entered.')
     else:
-        form = ParticipantForm()
-
+       form = ParticipantForm()
     return render(request, 'details.html', {'form': form})

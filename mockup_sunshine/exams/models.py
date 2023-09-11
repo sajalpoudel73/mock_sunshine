@@ -6,6 +6,9 @@ class Participant(models.Model):
     email = models.EmailField()
     address = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
+    education=models.CharField(max_length=30,default="+2")
+    university=models.CharField(max_length=50, default="Tribhuvan University")
+    dob=models.DateField(default='2000-01-01')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 # Create your models here.
