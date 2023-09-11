@@ -1,15 +1,22 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.views import View
 from django.urls import reverse_lazy
 from .models import Testimony,Participant
+from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from .forms import LoginForm,RegistrationForm,ParticipantForm
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 
 # Create your views here.
+
+
+def is_staff(user):
+    return user.is_staff
+
 class index(View):
     def post(self,request):
         pass
@@ -46,7 +53,7 @@ def exam(request):
 class login(LoginView):
     template_name = 'login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('dashboard')
 
 class logout(LogoutView):
     next_page = reverse_lazy('index')
@@ -85,6 +92,7 @@ def fill_details(request):
     return render(request, 'details.html', {'form': form})
 
 @login_required
+
 def dashboard(request):
     if request.user.is_staff:
         return redirect(admin_dash)
@@ -92,5 +100,44 @@ def dashboard(request):
 
 
 @login_required
+@user_passes_test(is_staff)
 def admin_dash(request):
     return render(request,'admin_dash.html')
+
+def view_users(request):
+    staffs = User.objects.filter(is_staff=True).values('id', 'username', 'email')
+    
+    # Get regular users
+    users = User.objects.exclude(is_staff=True, is_superuser=True).values('id', 'username', 'email')
+    
+    # Convert the QuerySet data to lists
+    staffs_list = list(staffs)
+    users_list = list(users)
+  
+    
+    # Create a dictionary to hold the data
+    data = {
+        'staffs': staffs_list,
+        'users': users_list,
+        
+    }
+    
+    return render(request,'view-users.html', data )
+
+def view_user(request,username):
+    return HttpResponse("View User Route")
+
+def edit_user(request,username):
+    return HttpResponse("Edit User Route")
+
+
+
+@login_required
+@user_passes_test(is_staff)
+def delete_user(request,email):
+    user_to_delete = get_object_or_404(User, email=email)
+    user_to_delete.delete()
+    messages.success(request, f"User {user_to_delete.username} has been deleted successfully.")
+    return redirect('admin_dash')
+   
+    
