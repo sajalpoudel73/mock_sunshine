@@ -83,3 +83,14 @@ def fill_details(request):
     else:
        form = ParticipantForm()
     return render(request, 'details.html', {'form': form})
+
+@login_required
+def dashboard(request):
+    if request.user.is_staff:
+        return redirect(admin_dash)
+    return render(request,'dashboard.html')
+
+
+@login_required
+def admin_dash(request):
+    return render(request,'admin_dash.html')

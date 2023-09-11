@@ -29,16 +29,23 @@
                         </div>
                         <div class="form-group">
                             <label for="{{ form.education.id_for_label }}" class="font-weight-bold">Education</label>
-                            {{ form.education|add_class:"form-control" }}
+                            <select id="{{ form.education.id_for_label }}" name="{{ form.education.name }}" class="form-control">
+                                <option value="">Select an option</option>
+                                <option value="SLC/SEE">SLC/SEE</option>
+                                <option value="+2 (HSEB, NEB)">+2 (HSEB, NEB)</option>
+                                <option value="Bachelors">Bachelors</option>
+                                <option value="Masters">Masters</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="{{ form.university.id_for_label }}" class="font-weight-bold">University</label>
-                            {{ form.university|add_class:"form-control" }}
+                            <input type="text" id="{{ form.university.id_for_label }}" name="{{ form.university.name }}" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="{{ form.dob.id_for_label }}" class="font-weight-bold">Date Of Birth</label>
-                            {{ form.dob|add_class:"form-control" }}
+                            <input type="date" id="{{ form.dob.id_for_label }}" name="{{ form.dob.name }}" class="form-control">
                         </div>
+                        
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
