@@ -23,9 +23,12 @@ class index(View):
 
     def get(self, request):
         # Get all testimonies
+        if request.user.is_authenticated:
+            return redirect(dashboard)
         testimonies = Testimony.objects.all()
         message=None
         if request.user.is_authenticated:
+
             try:
                
                 details = Participant.objects.get(user=request.user)
@@ -136,9 +139,10 @@ def edit_user(request,username):
 @login_required
 @user_passes_test(is_staff)
 def delete_user(request,email):
-    user_to_delete = get_object_or_404(User, email=email)
-    user_to_delete.delete()
-    messages.success(request, f"User {user_to_delete.username} has been deleted successfully.")
-    return redirect('admin_dash')
+    if request.method=="POST":
+        user_to_delete = get_object_or_404(User, email=email)
+        user_to_delete.delete()
+        messages.success(request, f"User {user_to_delete.username} has been deleted successfully.")
+        return redirect('admin_dash')
    
     

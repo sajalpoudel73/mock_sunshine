@@ -11,8 +11,11 @@
 
   {% load bootstrap_icons %}
   <style>
+    .btn-container a:hover{
+        text-decoration:underline;
+    }
     a:hover{
-        text-decoration: underline;
+       
         transform: scale(1.1);
         transition:transform 0.2s ease;
     }
@@ -22,7 +25,13 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
         <div class="nav-item">
-        <a class="navbar-brand ml-5" href="{% url 'index' %}">Sunshine MockUp </a>
+        <a class="navbar-brand ml-5" href="
+        {% if user.is_authenticated %}
+        {% url 'dashboard' %}
+        {% else %}
+        {% url 'index' %}
+        {% endif %}
+        ">Sunshine MockUp </a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
