@@ -16,6 +16,8 @@ urlpatterns=[
     path('delete_user/<str:email>', views.delete_user,name='delete-user'),
     path('view-user/<str:username>',views.view_user,name="view-user"),
     path('add_sets',views.add_questionset,name="add_qset"),
-    path('view_qsets',views.view_questionset,name="view_questionset")
+    path('add_question',views.add_question,name="add_question"),
+    path('view_qsets',views.view_questionset,name="view_questionset"),
+    path('view_set/<str:set_id>',views.view_set,name="view_individualset")
 
 ]

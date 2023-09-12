@@ -22,13 +22,13 @@ class Testimony(models.Model):
         return self.student_name
 
 class QuestionCategory(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
 class QuestionSet(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -46,7 +46,6 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice = models.IntegerField()
     is_correct = models.BooleanField(default=False)
-
     def __str__(self):
         return str(self.choice)
     

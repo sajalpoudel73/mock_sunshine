@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+from django.forms import BaseFormSet,forms
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
@@ -10,7 +11,15 @@ class ParticipantForm(forms.ModelForm):
         fields = ['name', 'email', 'address', 'phone','education','university','dob']
         
 
+class ChoiceForm(forms.Form):
+    choice_text = forms.CharField(max_length=100)
+    is_correct = forms.BooleanField(required=False)
 
+class ChoiceFormSet(BaseFormSet):
+    def add_fields(self, form, index):
+        super().add_fields(form, index)
+        form.fields[f'choice_text_{index}'] = forms.CharField(max_length=100)
+        form.fields[f'is_correct_{index}'] = forms.BooleanField(required=False)
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))

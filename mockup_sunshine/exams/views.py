@@ -10,6 +10,7 @@ from .forms import *
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+import itertools
 
 # Create your views here.
 
@@ -105,7 +106,8 @@ def dashboard(request):
 @user_passes_test(is_staff)
 def admin_dash(request):
     users = User.objects.exclude(is_staff=True, is_superuser=True).count()
-    return render(request,'admin_dash.html',{'users':users})
+    sets= QuestionSet.objects.all().count()
+    return render(request,'admin_dash.html',{'users':users,'sets':sets})
 
 def view_users(request):
     staffs = User.objects.filter(is_staff=True).values('id', 'username', 'email')
@@ -119,7 +121,7 @@ def view_users(request):
     return render(request,'view-users.html', data )
 
 def view_user(request,username):
-    return HttpResponse("View User Route")
+    return render(request,'view_user.html',{'username':username})
 
 def edit_user(request,username):
     return HttpResponse("Edit User Route")
@@ -140,10 +142,50 @@ def add_questionset(request):
         form=questionSetForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect(view_questionset)
     else:
         form=questionSetForm()
     return render(request,'add_qset.html',{'form':form})
 
+def add_question(request):
+    if request.method=="POST":
+        
+        form=questionForm(request.POST)
+       
+        if form.is_valid():
+            form.save()
+        return redirect(dashboard)
+    else:
+
+        form=questionForm(request.POST)
+        
+        try:
+            sets=QuestionSet.objects.all()
+            categories=QuestionCategory.objects.all()
+        except:
+            sets=None
+            categories=None
+        context={
+            'form':form,
+            'sets':sets,
+            'categories':categories,
+        }
+        return render(request,'add_question.html',context)
 def view_questionset(request):
     sets=QuestionSet.objects.all()
     return render(request,'view_questionset.html',{'sets':sets})
+
+def view_set(request, set_id):
+    question_set = get_object_or_404(QuestionSet, id=set_id)
+    questions = Question.objects.filter(question_set=question_set)
+   
+    for question in questions:
+        choices = Choice.objects.filter(question=question)
+        explanations = Explanation.objects.filter(question=question, choice__in=choices)
+        question.choices_and_explanations = zip(choices, explanations)
+    context = {
+    'question_set': question_set,
+    'questions': questions,
+}
+
+    return render(request, 'view_set.html', context)
