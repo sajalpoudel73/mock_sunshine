@@ -1,0 +1,15 @@
+{% extends 'admin_dash.html' %}
+{% load bootstrap_icons %}
+{% block page %}
+<div class="row justify-content-end">
+    <a href="{% url 'add_qset' %}" class="btn btn-primary text-light col-md-2 "><strong>Add Question Sets</strong></a>
+</div>
+{% if sets %}
+<div class="bg-dark text-light p-3 text-center display-5">Question Sets</div>
+<div class="row text-center">
+    {% for set in sets %}
+<div class="p-2 col-sm-2 alert alert-secondary mx-1">{{ set.name }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -14,6 +14,8 @@ urlpatterns=[
     path('view-users',views.view_users,name="view-users",),
     path('edit-user/<str:username>',views.edit_user,name='edit-user'),
     path('delete_user/<str:email>', views.delete_user,name='delete-user'),
-    path('view-user/<str:username>',views.view_user,name="view-user")
+    path('view-user/<str:username>',views.view_user,name="view-user"),
+    path('add_sets',views.add_questionset,name="add_qset"),
+    path('view_qsets',views.view_questionset,name="view_questionset")
 
 ]

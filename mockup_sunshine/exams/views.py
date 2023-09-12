@@ -6,7 +6,7 @@ from .models import Testimony,Participant
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required,user_passes_test
-from .forms import LoginForm,RegistrationForm,ParticipantForm
+from .forms import *
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -95,7 +95,6 @@ def fill_details(request):
     return render(request, 'details.html', {'form': form})
 
 @login_required
-
 def dashboard(request):
     if request.user.is_staff:
         return redirect(admin_dash)
@@ -110,22 +109,13 @@ def admin_dash(request):
 
 def view_users(request):
     staffs = User.objects.filter(is_staff=True).values('id', 'username', 'email')
-    
-    # Get regular users
     users = User.objects.exclude(is_staff=True, is_superuser=True).values('id', 'username', 'email')
-    
-    # Convert the QuerySet data to lists
     staffs_list = list(staffs)
     users_list = list(users)
-  
-    
-    # Create a dictionary to hold the data
     data = {
         'staffs': staffs_list,
         'users': users_list,
-        
     }
-    
     return render(request,'view-users.html', data )
 
 def view_user(request,username):
@@ -145,4 +135,15 @@ def delete_user(request,email):
         messages.success(request, f"User {user_to_delete.username} has been deleted successfully.")
         return redirect('admin_dash')
    
-    
+def add_questionset(request):
+    if request.method=="POST":
+        form=questionSetForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form=questionSetForm()
+    return render(request,'add_qset.html',{'form':form})
+
+def view_questionset(request):
+    sets=QuestionSet.objects.all()
+    return render(request,'view_questionset.html',{'sets':sets})

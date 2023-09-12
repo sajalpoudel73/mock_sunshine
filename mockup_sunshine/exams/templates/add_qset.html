@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %} | Add Question Sets {% endblock %}
+{% block content %}
+
+<div class="bg-primary text-light text-center p-3">
+    <p class="display-4">Add Questions Set Route</p>
+    <p class="diplay-6">Under Construction</p>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Question Set Details</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.name.id_for_label }}" class="font-weight-bold">Name</label>
+                            {{ form.name|add_class:"form-control" }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

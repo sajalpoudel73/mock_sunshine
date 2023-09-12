@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from .models import Participant
+from .models import *
 
 class ParticipantForm(forms.ModelForm):
     class Meta:
@@ -42,3 +42,26 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+class questionCategoryForm(forms.ModelForm):
+    class Meta:
+        model = QuestionCategory
+        fields=['name']
+
+class questionSetForm(forms.ModelForm):
+    class Meta:
+        model = QuestionSet
+        fields=['name']
+class questionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields=['question_set','category','question']
+
+class questionChoiceForm(forms.ModelForm):
+    class Meta:
+        model = Choice
+        fields=['question','choice','is_correct']
+class explanationForm(forms.ModelForm):
+    class Meta:
+        model = Explanation
+        fields=['question','choice','text']
