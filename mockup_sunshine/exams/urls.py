@@ -20,6 +20,7 @@ urlpatterns=[
     path('view_qsets',views.view_questionset,name="view_questionset"),
     path('view_set/<str:set_id>',views.view_set,name="view_individualset"),
     path('add_choice/<str:question_id>',views.add_choice,name="add_choice"),
-    path('add_explanation/<str:question_id>',views.add_explanation,name="add_explanation")
+    path('add_explanation/<str:question_id>',views.add_explanation,name="add_explanation"),
+    path('add_category',views.add_category,name="add_category")
 
 ]

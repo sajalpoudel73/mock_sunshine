@@ -251,6 +251,16 @@ def add_explanation(request, question_id):
     })
 
 
-
+@login_required
+@user_passes_test(is_staff)
+def add_category(request):
+    if request.method=="POST":
+        form=questionCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect(view_questionset)
+    else:
+        form=questionCategoryForm()
+    return render(request,'categories.html',{'form':form})
 
     

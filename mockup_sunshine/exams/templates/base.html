@@ -20,6 +20,21 @@
         transition:transform 0.2s ease;
    
     }
+    body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    }
+
+    .container {
+        flex: 1;
+    }
+
+    footer {
+        background-color: #343a40; /* Change this to your desired background color */
+        color: #fff; /* Change this to your desired text color */
+    }
 
 </style>
 </head>
@@ -122,6 +137,23 @@
 
 </body>
 {% bootstrap_javascript %}
+<script>
+    function adjustFooter() {
+        const body = document.body;
+        const footer = document.querySelector('footer');
+        const isScrollable = body.scrollHeight > body.clientHeight;
+
+        if (!isScrollable) {
+            footer.classList.add('fixed-bottom');
+        } else {
+            footer.classList.remove('fixed-bottom');
+        }
+    }
+
+    // Call the function on page load and when the window is resized
+    window.addEventListener('load', adjustFooter);
+    window.addEventListener('resize', adjustFooter);
+</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 

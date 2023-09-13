@@ -3,7 +3,7 @@
 {% block page %}
 <div class="row justify-content-end"  id="top">
     <a href="{% url 'add_question' %}" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Question</strong></a>
-    <a href="#" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Category</strong></a>
+    <a href="{% url 'add_category' %}" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Category</strong></a>
     
    
 </div>
@@ -18,7 +18,7 @@
 </div>
 
 
-<div class="fixed-bottom m-3" style="left: calc(90vw - 30px); bottom:10px">
+<div class="fixed-bottom m-3" style="left: calc(90vw - 30px); bottom:20px">
     <a href="#top" class="btn btn-primary btn-lg" id="scroll-to-top" role="button">
         {% bs_icon 'arrow-up-circle-fill' %} Scroll to Top
     </a>
