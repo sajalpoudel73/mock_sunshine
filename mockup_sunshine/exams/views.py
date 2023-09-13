@@ -169,7 +169,7 @@ def add_question(request):
        
         if form.is_valid():
             form.save()
-        return redirect(dashboard)
+        return redirect(request.META.get('HTTP_REFERER'))
     else:
 
         form=questionForm(request.POST)
@@ -221,9 +221,9 @@ def add_choice(request, question_id):
             choice = form.save(commit=False)
             choice.question = question
             choice.save()
-            return HttpResponse("Choice added successfully")
+            return redirect(request.META.get('HTTP_REFERER'))
     else:
-        form = questionChoiceForm(question=question)
+        form = questionChoiceForm(question=question,initial={'question': question})
     
     return render(request, 'choices.html', {
         'form': form,
@@ -241,9 +241,9 @@ def add_explanation(request, question_id):
             explanation = form.save(commit=False)
             explanation.question = question
             explanation.save()
-            return HttpResponse("Explanation added successfully")
+            return redirect(request.META.get('HTTP_REFERER'))
     else:
-        form = explanationForm(question=question)
+        form = explanationForm(question=question,initial={'question': question})
     
     return render(request, 'explanation.html', {
         'form': form,

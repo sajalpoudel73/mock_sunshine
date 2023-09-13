@@ -1,7 +1,7 @@
 {% extends 'admin_dash.html' %}
 {% load bootstrap_icons %}
 {% block page %}
-<div class="row justify-content-end">
+<div class="row justify-content-end"  id="top">
     <a href="{% url 'add_question' %}" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Question</strong></a>
     <a href="#" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Category</strong></a>
     
@@ -9,10 +9,29 @@
 </div>
 
 <div class="bg-dark text-light p-3 text-center display-5">Questions in {{ question_set.name }}</div>
+<div class="row mb-5">
+    {% for question in questions %}
+    <div class="col-sm-1">
+        <a href="#question_{{ forloop.counter }}" class="btn btn-primary" > Q. {{ forloop.counter }} </a>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="fixed-bottom m-3" style="left: calc(90vw - 30px); bottom:10px">
+    <a href="#top" class="btn btn-primary btn-lg" id="scroll-to-top" role="button">
+        {% bs_icon 'arrow-up-circle-fill' %} Scroll to Top
+    </a>
+</div>
+
+
+
+
+
 {% for question in questions %}
-<div class="col-lg-9">
+<div class="col-lg-9" id="question_{{ forloop.counter }}">
     <div class="row container-fluid border-bottom my-2">
-        <div class="display-6"><strong>Question: {{ question.id }}</strong></div>
+        <div class="display-6"><strong>Question: {{ forloop.counter }}</strong></div>
         <div><p>Category: <strong>{{ question.category }}</strong></p></div>
         <hr>
         <p>
@@ -25,15 +44,13 @@
                 <p><strong>Choices and Explanations:</strong></p>
                 
                 {% for choice, explanation in question.choices_and_explanations %}
-                    {% if choice.is_true %}
-                    <div class="p-2 bg-success" role="alert">
-                        <p><strong>{{ choice.choice }}</strong>. {{ explanation.text }}</p>
-                        
+                    {% if choice.is_correct %}
+                    <div class="p-2  alert alert-success" role="alert">
+                        <p><strong>{{ choice.choice }}. {{ explanation.text }}</strong></p>
                     </div>
                     {% else %}
-                    <div class="p-2 alert alert-primary" role="alert">
+                    <div class="p-2 alert alert-danger" role="alert">
                         <p><strong>{{ choice.choice }}</strong>. {{ explanation.text }}</p>
-                        
                     </div>
                     {% endif %}
                 {% endfor %}
