@@ -45,6 +45,7 @@ class index(View):
             'message': message,
         }
         return render(request, "index.html", context)
+    
 def about(request):
     return render(request,'about.html')
 
@@ -72,6 +73,8 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'register.html', {'form': form})
+
+
 @login_required
 def fill_details(request):
     if request.method == "POST":
@@ -107,8 +110,16 @@ def dashboard(request):
 def admin_dash(request):
     users = User.objects.exclude(is_staff=True, is_superuser=True).count()
     sets= QuestionSet.objects.all().count()
-    return render(request,'admin_dash.html',{'users':users,'sets':sets})
+    questions = Question.objects.all().count()
+    context={
+        'users':users,
+        'sets':sets,
+        'questions':questions
+    }
+    return render(request,'admin_dash.html',context)
 
+@login_required
+@user_passes_test(is_staff)
 def view_users(request):
     staffs = User.objects.filter(is_staff=True).values('id', 'username', 'email')
     users = User.objects.exclude(is_staff=True, is_superuser=True).values('id', 'username', 'email')
@@ -136,7 +147,9 @@ def delete_user(request,email):
         user_to_delete.delete()
         messages.success(request, f"User {user_to_delete.username} has been deleted successfully.")
         return redirect('admin_dash')
-   
+    
+@login_required
+@user_passes_test(is_staff) 
 def add_questionset(request):
     if request.method=="POST":
         form=questionSetForm(request.POST)
@@ -147,6 +160,8 @@ def add_questionset(request):
         form=questionSetForm()
     return render(request,'add_qset.html',{'form':form})
 
+@login_required
+@user_passes_test(is_staff)
 def add_question(request):
     if request.method=="POST":
         
@@ -171,10 +186,15 @@ def add_question(request):
             'categories':categories,
         }
         return render(request,'add_question.html',context)
+    
+@login_required
+@user_passes_test(is_staff)
 def view_questionset(request):
     sets=QuestionSet.objects.all()
     return render(request,'view_questionset.html',{'sets':sets})
 
+@login_required
+@user_passes_test(is_staff)
 def view_set(request, set_id):
     question_set = get_object_or_404(QuestionSet, id=set_id)
     questions = Question.objects.filter(question_set=question_set)
@@ -186,6 +206,51 @@ def view_set(request, set_id):
     context = {
     'question_set': question_set,
     'questions': questions,
-}
+    }
 
     return render(request, 'view_set.html', context)
+
+@login_required
+@user_passes_test(is_staff)
+def add_choice(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+
+    if request.method == "POST":
+        form = questionChoiceForm(request.POST, question=question)
+        if form.is_valid():
+            choice = form.save(commit=False)
+            choice.question = question
+            choice.save()
+            return HttpResponse("Choice added successfully")
+    else:
+        form = questionChoiceForm(question=question)
+    
+    return render(request, 'choices.html', {
+        'form': form,
+        'question': question,
+    })
+
+@login_required
+@user_passes_test(is_staff)
+def add_explanation(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+
+    if request.method == "POST":
+        form = explanationForm(request.POST, question=question)
+        if form.is_valid():
+            explanation = form.save(commit=False)
+            explanation.question = question
+            explanation.save()
+            return HttpResponse("Explanation added successfully")
+    else:
+        form = explanationForm(question=question)
+    
+    return render(request, 'explanation.html', {
+        'form': form,
+        'question': question,
+    })
+
+
+
+
+    

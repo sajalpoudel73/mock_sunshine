@@ -7,7 +7,7 @@
 <div class="container-fluid bg-dark text-light">
     <div class="row">
         <!-- Sidebar -->
-        <div id="sidebar" class="col-sm-2 bg-dark">
+        <div id="sidebar" class="col-sm-2 bg-dark" style="height: calc(100vh - 300px);">
             <div class="p-3 text-center ">
                <a href=" {% url 'dashboard' %}" class="btn btn-dark"> <h3>Admin Dashboard</h3></a>
             </div>
@@ -19,9 +19,7 @@
                 <div class="btn-container">
                     <a href="{% url 'view_questionset' %}" class="btn text-primary btn-block my-1"><strong>View Question Sets</strong></a>
                 </div>
-                <div class="btn-container">
-                    <a href="{% url 'add_question' %}" class="btn text-primary btn-block my-1"><strong>Add Question</strong></a>
-                </div>
+                
             </div>
             
             
@@ -35,6 +33,7 @@
            <div class="p-3 bg-primary text-center col-md-3 my-1 mx-1">No of users: {{ users }}</div>
            <div class="p-3 bg-primary text-center col-md-3 my-1 mx-1">No of tests: 6546</div>
            <div class="p-3 bg-primary text-center col-md-3 my-1 mx-1">No of Question Sets: {{ sets }}</div>
+           <div class="p-3 bg-primary text-center col-md-3 my-1 mx-1">No of Questions: {{ questions }}</div>
         </div>
            {% endblock %}
         </div>

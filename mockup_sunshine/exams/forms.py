@@ -70,7 +70,20 @@ class questionChoiceForm(forms.ModelForm):
     class Meta:
         model = Choice
         fields=['question','choice','is_correct']
+        widgets = {
+            'is_correct': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+    def __init__(self, *args, **kwargs):
+        question = kwargs.pop('question', None)
+        super().__init__(*args, **kwargs)
+        if question:
+            self.fields['question'].queryset = Question.objects.filter(question_set=question.question_set)
 class explanationForm(forms.ModelForm):
     class Meta:
         model = Explanation
         fields=['question','choice','text']
+    def __init__(self, *args, **kwargs):
+        question = kwargs.pop('question', None)
+        super().__init__(*args, **kwargs)
+        if question:
+            self.fields['choice'].queryset = Choice.objects.filter(question=question)

@@ -4,14 +4,15 @@
 <div class="row justify-content-end">
     <a href="{% url 'add_question' %}" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Question</strong></a>
     <a href="#" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Category</strong></a>
-    <a href="#" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Choices</strong></a>
+    
+   
 </div>
 
 <div class="bg-dark text-light p-3 text-center display-5">Questions in {{ question_set.name }}</div>
 {% for question in questions %}
 <div class="col-lg-9">
-    <div class="row container-fluid border-bottom">
-        <div class="display-6"><strong>{{ question.id }}</strong></div>
+    <div class="row container-fluid border-bottom my-2">
+        <div class="display-6"><strong>Question: {{ question.id }}</strong></div>
         <div><p>Category: <strong>{{ question.category }}</strong></p></div>
         <hr>
         <p>
@@ -24,15 +25,28 @@
                 <p><strong>Choices and Explanations:</strong></p>
                 
                 {% for choice, explanation in question.choices_and_explanations %}
-                    <div class="p-2 alert alert-primary">
+                    {% if choice.is_true %}
+                    <div class="p-2 bg-success" role="alert">
                         <p><strong>{{ choice.choice }}</strong>. {{ explanation.text }}</p>
+                        
                     </div>
+                    {% else %}
+                    <div class="p-2 alert alert-primary" role="alert">
+                        <p><strong>{{ choice.choice }}</strong>. {{ explanation.text }}</p>
+                        
+                    </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
                 
            
 
 
+        </div>
+        <div class="row my-3 justify-content-end">
+            <a href="{% url 'add_choice' question.id %}" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Choices</strong></a>
+            <a href="{% url 'add_explanation' question.id %}" class="btn btn-primary text-light col-md-2 mx-1"><strong>Add Explanations</strong></a>
+            
         </div>
     </div>
 </div>
