@@ -115,13 +115,15 @@
             </div>
             <div class="col-md-4">
                 <h5>Quick Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about/">About</a></li>
-                    <li><a href="/services/">Services</a></li>
-                    <li><a href="/contact/">Contact</a></li>
-                </ul>
+                <div class="d-flex flex-column">
+                    <a href="{% url 'index' %}" class="btn text-light my-1">Home</a>
+                    <a href="{% url 'about' %}" class="btn text-light my-1">Services</a>
+                    <a href="/contact/" class="btn text-light my-1">Contact</a>
+                    <a href="/about/" class="btn text-light my-1">About</a>
+                </div>
             </div>
+            
+            
             <div class="col-md-4">
                 <h5>Follow Us</h5>
                 <ul class="list-inline social-icons">

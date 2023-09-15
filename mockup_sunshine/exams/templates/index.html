@@ -41,14 +41,14 @@
 </style>
 
 {% if testimonies %}
-<div id="testimonialCarousel" class="carousel slide mt-5 carousel-card-container" data-ride="carousel">
+<div id="testimonialCarousel" class="carousel slide my-5 carousel-card-container" data-ride="carousel">
     <p class="text-center h5">What our past students have to say</p>
     <div class="carousel-inner">
         {% for testimonial in testimonies %}
         <div class="carousel-item {% if forloop.counter0|divisibleby:3 %}active{% endif %}">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 mx-auto">
+                    <div class="col-md-6 mx-auto">
                         <div class="card">
                             <div class="card-body">
                                 <p class="card-text">{{ testimonial.testimony_text }}</p>
