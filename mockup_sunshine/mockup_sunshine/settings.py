@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-p@1jkqqp-j-ox(f)+r#^b90td$+*&-2h2#pdl@*znjfk2w(0wt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '127.0.0.1','*' ]
+ALLOWED_HOSTS = [ '*' ]
 
 
 # Application definition
@@ -83,7 +83,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sunshine_mockup',
-        'USER':'root',
+        'USER':'sajal',
         'PASSWORD':'Sajal.2017',
         'PORT':3306,
         'HOST':'localhost'

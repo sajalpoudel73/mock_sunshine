@@ -1,0 +1,33 @@
+{% extends "base.html" %} {# Assuming you have a base.html template #}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Test of Set 1</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for question in questions %}
+                        <div class="form-group">
+                            <div class="p-3">Question: {{ forloop.counter }} Category: <strong>{{ question.category }}</strong></div>
+                        </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                  Default radio
+                                </label>
+                              </div>
+                            {% endfor %}
+                            <button class="btn btn-primary">Submit</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -49,8 +49,19 @@ class index(View):
 def about(request):
     return render(request,'about.html')
 
-def test_page(request):
-    pass
+def test_page(request,set_id):
+    question_set = get_object_or_404(QuestionSet, id=set_id)
+    questions = Question.objects.filter(question_set=question_set)
+   
+    for question in questions:
+        choices = Choice.objects.filter(question=question)
+        explanations = Explanation.objects.filter(question=question, choice__in=choices)
+        question.choices_and_explanations = zip(choices, explanations)
+    context = {
+    'question_set': question_set,
+    'questions': questions,
+    }
+    return render(request,'test_page.html',context)
 def exam(request):
     pass
 
