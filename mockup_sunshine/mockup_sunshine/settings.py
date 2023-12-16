@@ -83,7 +83,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sunshine_mockup',
-        'USER':'sajal',
+        'USER':'root',
         'PASSWORD':'Sajal.2017',
         'PORT':3306,
         'HOST':'localhost'
